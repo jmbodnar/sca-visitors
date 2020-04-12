@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Visitors
+
+  table 
+    thead
+      tr
+        th Firstname
+        th Lastname
+        th Phone
+        th Email
+    tbody 
+      each visitor in visitors
+        tr
+          td= visitor.firstname
+          td= visitor.lastname
+          td= visitor.phone
+          td= visitor.email

@@ -10,6 +10,13 @@ var visitorsRouter = require("./routes/visitors");
 
 var app = express();
 
+const mongoose = require("mongoose");
+const dbConnect = process.env.DB_CONNECT;
+mongoose
+  .connect(dbConnect, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("connected to mongodb..."))
+  .catch((err) => console.log(Error(err)));
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -22,14 +29,14 @@ app.use(
   sassMiddleware({
     src: path.join(__dirname, "public"),
     dest: path.join(__dirname, "public"),
-    indentedSyntax: true, // true = .sass and false = .scss
+    indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true,
   })
 );
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/visitors", visitorsRouter);
+app.use("/api/visitors", visitorsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
